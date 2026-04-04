@@ -1,0 +1,294 @@
+<shadui:Window
+    x:Class="servo_hw_test_app.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:servo_hw_test_app.Controls"
+    xmlns:local="clr-namespace:servo_hw_test_app.Views"
+    xmlns:converters="clr-namespace:servo_hw_test_app.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:shadui="clr-namespace:ShadUI;assembly=ShadUI"
+    xmlns:vm="using:servo_hw_test_app.ViewModels"
+    Title="Servo Hardware Test"
+    Height="800"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:MainWindowViewModel"
+    Icon="/Assets/avalonia-logo.ico"
+    mc:Ignorable="d">
+
+    <shadui:Window.Resources>
+        <converters:IntValidationConverter x:Key="IntValidationConverter" />
+    </shadui:Window.Resources>
+
+    <Design.DataContext>
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <shadui:Window.Hosts>
+        <shadui:DialogHost
+            x:Name="PART_DialogHost"
+            Manager="{Binding DialogManager}"
+            Owner="{Binding RelativeSource={RelativeSource AncestorType=shadui:Window}}" />
+    </shadui:Window.Hosts>
+
+    <shadui:Window.RightWindowTitleBarContent>
+        <local:SerialPortPannel />
+    </shadui:Window.RightWindowTitleBarContent>
+
+    <Panel>
+        <UniformGrid VerticalAlignment="Top" Columns="3">
+            <shadui:Card Margin="2">
+                <shadui:Card.Header>
+                    <shadui:CardTitle>Digital IN</shadui:CardTitle>
+                </shadui:Card.Header>
+
+                <StackPanel>
+                    <ItemsControl ItemsSource="{Binding DrvInputChannels}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <controls:DeviceInfoRowItem Title="{Binding ChannelNumber, StringFormat='Máy lái {0}'}">
+                                        <StackPanel Orientation="Horizontal" Spacing="16">
+                                            <CheckBox
+                                                Margin="0,4"
+                                                Content="Hall A"
+                                                IsChecked="{Binding IsHallAActive}"
+                                                IsHitTestVisible="False" />
+                                            <CheckBox
+                                                Margin="0,4"
+                                                Content="Hall B"
+                                                IsChecked="{Binding IsHallBActive}"
+                                                IsHitTestVisible="False" />
+                                            <CheckBox
+                                                Margin="0,4"
+                                                Content="Hall C"
+                                                IsChecked="{Binding IsHallCActive}"
+                                                IsHitTestVisible="False" />
+                                            <CheckBox
+                                                Margin="0,4"
+                                                Content="Fault"
+                                                IsChecked="{Binding IsFaultActive}"
+                                                IsHitTestVisible="False" />
+                                        </StackPanel>
+                                    </controls:DeviceInfoRowItem>
+                                    <Separator />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+
+                    <controls:DeviceInfoRowItem Title="FUSE">
+                        <StackPanel Orientation="Horizontal" Spacing="16">
+                            <CheckBox
+                                Margin="0,4"
+                                Content="In1"
+                                IsChecked="{Binding Fuse.In1Active}"
+                                IsHitTestVisible="False" />
+                            <CheckBox
+                                Margin="0,4"
+                                Content="In2"
+                                IsChecked="{Binding Fuse.In2Active}"
+                                IsHitTestVisible="False" />
+                            <CheckBox
+                                Margin="0,4"
+                                Content="In3"
+                                IsChecked="{Binding Fuse.In3Active}"
+                                IsHitTestVisible="False" />
+                            <CheckBox
+                                Margin="0,4"
+                                Content="In4"
+                                IsChecked="{Binding Fuse.In4Active}"
+                                IsHitTestVisible="False" />
+                        </StackPanel>
+                    </controls:DeviceInfoRowItem>
+                    <Separator />
+                </StackPanel>
+            </shadui:Card>
+
+            <shadui:Card Margin="2">
+                <shadui:Card.Header>
+                    <shadui:CardTitle>LTC2992</shadui:CardTitle>
+                </shadui:Card.Header>
+
+                <StackPanel>
+
+
+                    <controls:DeviceInfoRowItem Title="Điện áp tổng">
+                        <SelectableTextBlock Classes="p" Text="{Binding Ltc2992.VoltageSupply, StringFormat='0.00 V'}" />
+                    </controls:DeviceInfoRowItem>
+                    <Separator />
+
+                    <controls:DeviceInfoRowItem Title="Dòng điện tổng">
+                        <SelectableTextBlock Classes="p" Text="{Binding Ltc2992.CurrentSupply, StringFormat='0.00 A'}" />
+                    </controls:DeviceInfoRowItem>
+                    <Separator />
+
+                    <controls:DeviceInfoRowItem Title="Điện áp FPGA">
+                        <SelectableTextBlock Classes="p" Text="{Binding Ltc2992.VoltageMCU, StringFormat='0.00 V'}" />
+                    </controls:DeviceInfoRowItem>
+                    <Separator />
+
+                    <controls:DeviceInfoRowItem Title="Dòng điện FPGA">
+                        <SelectableTextBlock Classes="p" Text="{Binding Ltc2992.CurrentMCU, StringFormat='0.00 A'}" />
+                    </controls:DeviceInfoRowItem>
+                    <Separator />
+
+                </StackPanel>
+            </shadui:Card>
+
+            <shadui:Card Margin="2">
+                <shadui:Card.Header>
+                    <shadui:CardTitle>TMP101</shadui:CardTitle>
+                </shadui:Card.Header>
+                <StackPanel>
+                    <controls:DeviceInfoRowItem Title="Nhiệt độ">
+                        <SelectableTextBlock Classes="p" Text="{Binding Tmp101.Temperature, StringFormat='0.00 °C'}" />
+                    </controls:DeviceInfoRowItem>
+                    <Separator />
+                </StackPanel>
+
+            </shadui:Card>
+
+            <shadui:Card Margin="2">
+                <shadui:Card.Header>
+                    <shadui:CardTitle>AD7928</shadui:CardTitle>
+                </shadui:Card.Header>
+
+                <StackPanel>
+                    <ItemsControl ItemsSource="{Binding MotorPositions}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <controls:DeviceInfoRowItem Title="{Binding Description}">
+                                        <SelectableTextBlock Classes="p" Text="{Binding AdcValue}" />
+                                    </controls:DeviceInfoRowItem>
+                                    <Separator />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <ItemsControl ItemsSource="{Binding MotorCurrents}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <controls:DeviceInfoRowItem Title="{Binding Description}">
+                                        <SelectableTextBlock Classes="p" Text="{Binding AdcValue, StringFormat='0.00 A'}" />
+                                    </controls:DeviceInfoRowItem>
+                                    <Separator />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+
+                </StackPanel>
+            </shadui:Card>
+
+            <shadui:Card Margin="2">
+                <shadui:Card.Header>
+                    <shadui:CardTitle>PWM</shadui:CardTitle>
+                </shadui:Card.Header>
+
+
+                <StackPanel Spacing="1">
+                    <controls:DeviceInfoRowItem Title="Máy lái">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                MinWidth="100"
+                                Classes="Caption"
+                                Text="Kênh A" />
+                            <TextBlock
+                                MinWidth="100"
+                                Classes="Caption"
+                                Text="Kênh B" />
+                            <TextBlock
+                                MinWidth="100"
+                                Classes="Caption"
+                                Text="Kênh C" />
+
+                        </StackPanel>
+                    </controls:DeviceInfoRowItem>
+                    <Separator />
+
+                    <ItemsControl ItemsSource="{Binding PWMChannels}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <controls:DeviceInfoRowItem Title="{Binding Description}">
+
+                                        <StackPanel Orientation="Horizontal">
+
+                                            <TextBox
+                                                MinWidth="100"
+                                                Margin="0,0,4,0"
+                                                
+                                                Text="{Binding TargetDutyA}">
+                                                <TextBox.KeyBindings>
+                                                    <KeyBinding Command="{Binding ApplyDutyAValueCommand}" Gesture="Enter" />
+                                                </TextBox.KeyBindings>
+                                            </TextBox>
+                                            <TextBox
+                                                MinWidth="100"
+                                                Margin="0,0,4,0"
+                                                
+                                                Text="{Binding TargetDutyB}">
+                                                <TextBox.KeyBindings>
+                                                    <KeyBinding Command="{Binding ApplyDutyBValueCommand}" Gesture="Enter" />
+                                                </TextBox.KeyBindings>
+                                            </TextBox>
+                                            <TextBox
+                                                MinWidth="100"
+                                                Margin="0,0,4,0"
+                                                
+                                                Text="{Binding TargetDutyC}">
+                                                <TextBox.KeyBindings>
+                                                    <KeyBinding Command="{Binding ApplyDutyCValueCommand}" Gesture="Enter" />
+                                                </TextBox.KeyBindings>
+                                            </TextBox>
+                                        </StackPanel>
+                                    </controls:DeviceInfoRowItem>
+                                    <Separator />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+
+
+                </StackPanel>
+            </shadui:Card>
+
+            <shadui:Card Margin="2">
+                <shadui:Card.Header>
+                    <shadui:CardTitle>Digital Out</shadui:CardTitle>
+                </shadui:Card.Header>
+
+                <StackPanel>
+                    <ItemsControl ItemsSource="{Binding DOChannels}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <controls:DeviceInfoRowItem Title="{Binding Description}">
+
+                                        <CheckBox Margin="0,4" IsChecked="{Binding IsActive}" />
+                                    </controls:DeviceInfoRowItem>
+                                    <Separator />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+
+                </StackPanel>
+            </shadui:Card>
+
+        </UniformGrid>
+    </Panel>
+</shadui:Window>

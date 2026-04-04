@@ -1,0 +1,79 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package
+    Name="servo-hardware-test"
+    Version="1.0.1"
+    UpgradeCode="099baa99-80be-4303-b199-fd323205b8e0"
+    InstallerVersion="500"
+    Scope="perUser"
+    >
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version is already installed." />
+
+    <MediaTemplate EmbedCab="yes" />
+
+    <Icon Id="AppIcon" SourceFile="Logo-Mini.ico" />
+
+    <!-- User Program -->
+    <StandardDirectory Id="LocalAppDataFolder">
+      <Directory Id="INSTALLFOLDER" Name="servo-hardware-test" />
+    </StandardDirectory>
+
+    <!-- Desktop -->
+    <StandardDirectory Id="DesktopFolder" />
+
+    <!-- Start Menu -->
+    <StandardDirectory Id="ProgramMenuFolder">
+      <Directory Id="ApplicationProgramsFolder" Name="servo-hardware-test" />
+    </StandardDirectory>
+
+    <Feature Id="MainFeature" Title="servo-hardware-test" Level="1">
+      <ComponentGroupRef Id="AppFiles" />
+        <ComponentRef Id="ShortcutComponent" />
+    </Feature>
+
+  </Package>
+
+  <Fragment>
+    <ComponentGroup Id="AppFiles">
+    <Files Include="servo-hardware-test\bin\Release\net10.0\win-x64\publish\**" />
+    </ComponentGroup>
+
+
+    <DirectoryRef Id="INSTALLFOLDER">
+
+        <Component Id="ShortcutComponent"
+                   Guid="b07937c0-4cbf-4a3d-b4ad-ca73b4f22ba8">
+
+        <!-- Desktop shortcut -->
+          <Shortcut
+            Id="DesktopShortcut"
+            Directory="DesktopFolder"
+            Name="servo-hardware-test"
+            Target="[INSTALLFOLDER]sa-drive-app.exe"
+            WorkingDirectory="INSTALLFOLDER"
+            Icon="AppIcon"
+            Advertise="no" />
+
+                    <!-- Start Menu shortcut -->
+        <Shortcut
+          Id="StartMenuShortcut"
+          Directory="ApplicationProgramsFolder"
+          Name="servo-hardware-test"
+          Target="[INSTALLFOLDER]sa-drive-app.exe"
+          WorkingDirectory="INSTALLFOLDER"
+          Icon="AppIcon"
+          Advertise="no" />
+
+          <!-- Bắt buộc để component hợp lệ -->
+          <RegistryValue
+            Root="HKCU"
+            Key="Software\CompanyName\servo-hardware-test"
+            Name="installed"
+            Type="integer"
+            Value="1"
+            KeyPath="yes" />
+
+        </Component>
+    </DirectoryRef>
+  </Fragment>
+</Wix>

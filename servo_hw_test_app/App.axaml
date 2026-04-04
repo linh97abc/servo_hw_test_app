@@ -1,0 +1,35 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="servo_hw_test_app.App"
+             xmlns:local="using:servo_hw_test_app"
+             xmlns:shadui="clr-namespace:ShadUI;assembly=ShadUI"
+             RequestedThemeVariant="Default">
+             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+
+    <Application.DataTemplates>
+        <local:ViewLocator/>
+    </Application.DataTemplates>
+  
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="Controls/Index.axaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        <FontFamily x:Key="JetbrainsFont">avares://servo_hw_test_app/Assets/Fonts#Jetbrains</FontFamily>
+        <FontFamily x:Key="ManropeFont">avares://servo_hw_test_app/Assets/Fonts#Manrope</FontFamily>
+        <FontFamily x:Key="LucideIcon">avares://servo_hw_test_app/Assets/Fonts#lucide</FontFamily>
+        <FontFamily x:Key="ShadUIIcon">avares://servo_hw_test_app/Assets/Fonts#shadui</FontFamily>
+        <x:Double x:Key="ControlContentThemeFontSize">12</x:Double>
+    </Application.Resources>
+    <Application.Styles>
+        <shadui:ShadTheme />
+        
+        <StyleInclude Source="avares://servo_hw_test_app/Styles/Index.axaml" />
+        <Style Selector="DataValidationErrors">
+            <Setter Property="Template" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}"/>
+        </Style>
+    </Application.Styles>
+</Application>

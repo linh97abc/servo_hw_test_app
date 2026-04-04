@@ -1,0 +1,17 @@
+@startuml
+title Sequence Diagram: Host-Device Communication
+
+actor User
+participant Host
+participant Device
+
+loop every 10Hz
+    Host -> Host: Get user input from GUI
+    Host -> Device: Send request
+    Device -> Device: Receive request
+    Device --> Host: Send response
+    Host -> Host: Update UI with response
+    Device -> Device: Execute command
+end
+
+@enduml

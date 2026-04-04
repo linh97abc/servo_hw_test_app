@@ -1,0 +1,31 @@
+<UserControl
+  x:Class="servo_hw_test_app.Views.SerialPortPannel"
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  d:DesignHeight="450"
+  d:DesignWidth="800"
+  mc:Ignorable="d">
+  <StackPanel
+    Margin="0,2"
+    Orientation="Horizontal"
+    Spacing="8">
+    <ComboBox Width="120" 
+      SelectedItem="{Binding SelectedPort}"
+      ItemsSource="{Binding AvailablePorts}">
+      
+    </ComboBox>
+    <Button
+      Classes="Primary"
+      Content="Kết nối"
+      Command="{Binding ConnectCommand}"
+      IsVisible="{Binding !IsConnected}" />
+
+    <ToggleButton
+      Classes="Outline"
+      Content="Ngắt kết nối"
+      Command="{Binding DisconnectCommand}"
+      IsVisible="{Binding IsConnected}" />
+  </StackPanel>
+</UserControl>
