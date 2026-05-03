@@ -26,8 +26,12 @@ class ComRxData
 
     public bool is_crc_valid;
 
-    public ComRxData(byte[] data)
+    public uint seq;
+
+    public ComRxData(uint sequence, byte[] data)
     {
+        this.seq = sequence;
+
         // Parse the byte array to populate the properties
         // This is just a placeholder. You need to implement the actual parsing logic based on your data format.
 

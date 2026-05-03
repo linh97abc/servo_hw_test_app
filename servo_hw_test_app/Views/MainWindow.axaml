@@ -37,7 +37,10 @@
     </shadui:Window.Hosts>
 
     <shadui:Window.RightWindowTitleBarContent>
-        <local:SerialPortPannel />
+        <StackPanel Orientation="Horizontal" Spacing="8">
+            <TextBlock VerticalAlignment="Center" Text="{Binding MessageCount, StringFormat='Messages Count: {0}'}" />
+            <local:SerialPortPannel />
+        </StackPanel>
     </shadui:Window.RightWindowTitleBarContent>
 
     <Panel>

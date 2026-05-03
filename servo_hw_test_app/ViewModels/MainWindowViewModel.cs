@@ -12,6 +12,9 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty]
     private DialogManager _dialogManager;
 
+    [ObservableProperty]
+    private uint _messageCount;
+
     public MainWindowViewModel()
     {
         _dialogManager = ServiceProvider.Inst.GetService<DialogManager>();
@@ -36,6 +39,8 @@ public partial class MainWindowViewModel : ViewModelBase
         // Process the received data and update the UI accordingly
         // For example, if ComRxData contains a temperature value:
         // Tmp101.Temperature = data.Temperature;
+
+        this.MessageCount = data.seq;
 
         for (int i = 0; i < 4; i++)
         {

@@ -55,6 +55,7 @@ class ComService
         }
     }
 
+    uint _seq = 0;
     private void ProcessBuffer()
     {
         while (true)
@@ -72,7 +73,7 @@ class ComService
 
                 byte[] decoded = COBS.NET.COBS.Decode(frame);
                 // HandleRxPacket(decoded);
-                var data = new ComRxData(decoded);
+                var data = new ComRxData(_seq++, decoded);
                 if (data.is_crc_valid)
                 {
                     OnMessageReceived?.Invoke(data);
