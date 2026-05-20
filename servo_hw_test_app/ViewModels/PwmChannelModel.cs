@@ -8,6 +8,15 @@ namespace servo_hw_test_app.ViewModels;
 public partial class PWMChannelModel : ObservableObject
 {
     [ObservableProperty]
+    private int _targetDutyModeA;
+
+    [ObservableProperty]
+    private int _targetDutyModeB;
+
+    [ObservableProperty]
+    private int _targetDutyModeC;
+
+    [ObservableProperty]
     private string _targetDutyA;
 
     [ObservableProperty]
@@ -25,6 +34,34 @@ public partial class PWMChannelModel : ObservableObject
     public int AppliedDutyB { get; set; }
     public int AppliedDutyC { get; set; }
 
+    int LevelToDuty(int level) => level switch
+    {
+        0 => -1,   // Disabled
+        1 => 0,    // 0% duty cycle
+        2 => 25,   // 25% duty cycle
+        3 => 50,   // 50% duty cycle
+        4 => 75,   // 75% duty cycle
+        5 => 100,  // 100% duty cycle
+        _ => -1    // Default to disabled for invalid values
+    };
+
+    partial void OnTargetDutyModeAChanged(int value)
+    {
+        AppliedDutyA = LevelToDuty(value);
+        // TargetDutyA = AppliedDutyA.ToString();
+    }
+
+    partial void OnTargetDutyModeBChanged(int value)
+    {
+        AppliedDutyB = LevelToDuty(value);
+        // TargetDutyB = AppliedDutyB.ToString();
+    }
+
+    partial void OnTargetDutyModeCChanged(int value)
+    {
+        AppliedDutyC = LevelToDuty(value);
+        // TargetDutyC = AppliedDutyC.ToString();
+    }
 
 
     [RelayCommand]
@@ -95,5 +132,13 @@ public partial class PWMChannelModel : ObservableObject
         }
         TargetDutyC = AppliedDutyC.ToString(); // Revert to last valid value
     }
+
+    public PWMChannelModel()
+    {
+        OnTargetDutyModeAChanged(0);
+        OnTargetDutyModeBChanged(0);
+        OnTargetDutyModeCChanged(0);
+    }
+
 }
 

@@ -227,8 +227,40 @@
                                     <controls:DeviceInfoRowItem Title="{Binding Description}">
 
                                         <StackPanel Orientation="Horizontal">
+                                            <ComboBox MinWidth="100"
+                                                Margin="0,0,4,0"
+                                                SelectedIndex="{Binding TargetDutyModeA}">
+                                                <ComboBoxItem Content="HiZ" />
+                                                <ComboBoxItem Content="0   %" />
+                                                <ComboBoxItem Content="25  %" />
+                                                <ComboBoxItem Content="50  %" />
+                                                <ComboBoxItem Content="75  %" />
+                                                <ComboBoxItem Content="100 %" />
+                                            </ComboBox>
 
-                                            <TextBox
+                                            <ComboBox MinWidth="100"
+                                                Margin="0,0,4,0"
+                                                SelectedIndex="{Binding TargetDutyModeB}">
+                                                <ComboBoxItem Content="HiZ" />
+                                                <ComboBoxItem Content="0   %" />
+                                                <ComboBoxItem Content="25  %" />
+                                                <ComboBoxItem Content="50  %" />
+                                                <ComboBoxItem Content="75  %" />
+                                                <ComboBoxItem Content="100 %" />
+                                            </ComboBox>
+
+                                            <ComboBox MinWidth="100"
+                                                Margin="0,0,4,0"
+                                                SelectedIndex="{Binding TargetDutyModeC}">
+                                                <ComboBoxItem Content="HiZ" />
+                                                <ComboBoxItem Content="0   %" />
+                                                <ComboBoxItem Content="25  %" />
+                                                <ComboBoxItem Content="50  %" />
+                                                <ComboBoxItem Content="75  %" />
+                                                <ComboBoxItem Content="100 %" />
+                                            </ComboBox>
+
+                                            <!-- <TextBox
                                                 MinWidth="100"
                                                 Margin="0,0,4,0"
                                                 
@@ -254,7 +286,7 @@
                                                 <TextBox.KeyBindings>
                                                     <KeyBinding Command="{Binding ApplyDutyCValueCommand}" Gesture="Enter" />
                                                 </TextBox.KeyBindings>
-                                            </TextBox>
+                                            </TextBox> -->
                                         </StackPanel>
                                     </controls:DeviceInfoRowItem>
                                     <Separator />
