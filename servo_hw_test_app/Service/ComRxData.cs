@@ -73,9 +73,13 @@ class ComRxData
             bus_current = br.ReadUInt16() * (LTC2992_CURRENT_LSB / RSHUNT_1);
             mcu_current = br.ReadUInt16() * (LTC2992_CURRENT_LSB / RSHUNT_2);
 
+            // AD7928 control register = 0xDF90: RANGE = 0 (0..2*REFIN), CODING = 1 (straight binary)
+            const float AD7928_REFIN = 2.5f;
+            const float AD7928_LSB = 2 * AD7928_REFIN / 4096;
             for (int i = 0; i < 8; i++)
             {
-                adc_pwr[i] = br.ReadUInt16();
+                // low 12 bits = conversion result (upper bits carry the channel address)
+                adc_pwr[i] = (br.ReadUInt16() & 0x0FFF) * AD7928_LSB;
             }
         }
     }
