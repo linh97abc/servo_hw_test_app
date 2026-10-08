@@ -8,7 +8,7 @@ class ComRxData
     public uint[] hall = new uint[4];
     public uint fault;
 
-    public uint pio_input;
+
 
     public float[] position = new float[4];
     public float[] i_motor = new float[4];
@@ -23,6 +23,8 @@ class ComRxData
 
     public float mcu_voltage;
     public float mcu_current;
+
+    public float[] adc_pwr = new float[8];
 
     public bool is_crc_valid;
 
@@ -49,7 +51,7 @@ class ComRxData
                 hall[i] = br.ReadByte();
             }
             fault = br.ReadByte();
-            pio_input = br.ReadByte();
+            _ = br.ReadByte();
             for (int i = 0; i < 4; i++)
             {
                 position[i] = br.ReadUInt16();
@@ -70,6 +72,11 @@ class ComRxData
             mcu_voltage = br.ReadUInt16() * LTC2992_VOLTAGE_LSB;
             bus_current = br.ReadUInt16() * (LTC2992_CURRENT_LSB / RSHUNT_1);
             mcu_current = br.ReadUInt16() * (LTC2992_CURRENT_LSB / RSHUNT_2);
+
+            for (int i = 0; i < 8; i++)
+            {
+                adc_pwr[i] = br.ReadUInt16();
+            }
         }
     }
 

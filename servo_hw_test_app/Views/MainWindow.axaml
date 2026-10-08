@@ -84,78 +84,72 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-
-
-                    <controls:DeviceInfoRowItem Title="FUSE">
-                        <StackPanel Orientation="Horizontal" Spacing="16">
-                            <CheckBox
-                                Margin="0,4"
-                                Content="In1"
-                                IsChecked="{Binding Fuse.In1Active}"
-                                IsHitTestVisible="False" />
-                            <CheckBox
-                                Margin="0,4"
-                                Content="In2"
-                                IsChecked="{Binding Fuse.In2Active}"
-                                IsHitTestVisible="False" />
-                            <CheckBox
-                                Margin="0,4"
-                                Content="In3"
-                                IsChecked="{Binding Fuse.In3Active}"
-                                IsHitTestVisible="False" />
-                            <CheckBox
-                                Margin="0,4"
-                                Content="In4"
-                                IsChecked="{Binding Fuse.In4Active}"
-                                IsHitTestVisible="False" />
-                        </StackPanel>
-                    </controls:DeviceInfoRowItem>
-                    <Separator />
                 </StackPanel>
             </shadui:Card>
 
+            <StackPanel>
+                <shadui:Card Margin="2">
+                    <shadui:Card.Header>
+                        <shadui:CardTitle>LTC2992</shadui:CardTitle>
+                    </shadui:Card.Header>
+
+                    <StackPanel>
+
+
+                        <controls:DeviceInfoRowItem Title="Điện áp tổng">
+                            <SelectableTextBlock Classes="p" Text="{Binding Ltc2992.VoltageSupply, StringFormat='0.00 V'}" />
+                        </controls:DeviceInfoRowItem>
+                        <Separator />
+
+                        <controls:DeviceInfoRowItem Title="Dòng điện tổng">
+                            <SelectableTextBlock Classes="p" Text="{Binding Ltc2992.CurrentSupply, StringFormat='0.00 A'}" />
+                        </controls:DeviceInfoRowItem>
+                        <Separator />
+
+                        <controls:DeviceInfoRowItem Title="Điện áp FPGA">
+                            <SelectableTextBlock Classes="p" Text="{Binding Ltc2992.VoltageMCU, StringFormat='0.00 V'}" />
+                        </controls:DeviceInfoRowItem>
+                        <Separator />
+
+                        <controls:DeviceInfoRowItem Title="Dòng điện FPGA">
+                            <SelectableTextBlock Classes="p" Text="{Binding Ltc2992.CurrentMCU, StringFormat='0.00 A'}" />
+                        </controls:DeviceInfoRowItem>
+                        <Separator />
+
+                    </StackPanel>
+                </shadui:Card>
+
+                <shadui:Card Margin="2">
+                    <shadui:Card.Header>
+                        <shadui:CardTitle>TMP101</shadui:CardTitle>
+                    </shadui:Card.Header>
+                    <StackPanel>
+                        <controls:DeviceInfoRowItem Title="Nhiệt độ">
+                            <SelectableTextBlock Classes="p" Text="{Binding Tmp101.Temperature, StringFormat='0.00 °C'}" />
+                        </controls:DeviceInfoRowItem>
+                        <Separator />
+                    </StackPanel>
+
+                </shadui:Card>
+            </StackPanel>
+
             <shadui:Card Margin="2">
                 <shadui:Card.Header>
-                    <shadui:CardTitle>LTC2992</shadui:CardTitle>
+                    <shadui:CardTitle>ADC PWR</shadui:CardTitle>
                 </shadui:Card.Header>
 
-                <StackPanel>
-
-
-                    <controls:DeviceInfoRowItem Title="Điện áp tổng">
-                        <SelectableTextBlock Classes="p" Text="{Binding Ltc2992.VoltageSupply, StringFormat='0.00 V'}" />
-                    </controls:DeviceInfoRowItem>
-                    <Separator />
-
-                    <controls:DeviceInfoRowItem Title="Dòng điện tổng">
-                        <SelectableTextBlock Classes="p" Text="{Binding Ltc2992.CurrentSupply, StringFormat='0.00 A'}" />
-                    </controls:DeviceInfoRowItem>
-                    <Separator />
-
-                    <controls:DeviceInfoRowItem Title="Điện áp FPGA">
-                        <SelectableTextBlock Classes="p" Text="{Binding Ltc2992.VoltageMCU, StringFormat='0.00 V'}" />
-                    </controls:DeviceInfoRowItem>
-                    <Separator />
-
-                    <controls:DeviceInfoRowItem Title="Dòng điện FPGA">
-                        <SelectableTextBlock Classes="p" Text="{Binding Ltc2992.CurrentMCU, StringFormat='0.00 A'}" />
-                    </controls:DeviceInfoRowItem>
-                    <Separator />
-
-                </StackPanel>
-            </shadui:Card>
-
-            <shadui:Card Margin="2">
-                <shadui:Card.Header>
-                    <shadui:CardTitle>TMP101</shadui:CardTitle>
-                </shadui:Card.Header>
-                <StackPanel>
-                    <controls:DeviceInfoRowItem Title="Nhiệt độ">
-                        <SelectableTextBlock Classes="p" Text="{Binding Tmp101.Temperature, StringFormat='0.00 °C'}" />
-                    </controls:DeviceInfoRowItem>
-                    <Separator />
-                </StackPanel>
-
+                <ItemsControl ItemsSource="{Binding AdcPowerRails}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <controls:DeviceInfoRowItem Title="{Binding Description}">
+                                    <SelectableTextBlock Classes="p" Text="{Binding AdcValue}" />
+                                </controls:DeviceInfoRowItem>
+                                <Separator />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </shadui:Card>
 
             <shadui:Card Margin="2">

@@ -50,8 +50,6 @@ public partial class MainWindowViewModel : ViewModelBase
             DrvInputChannels[i].IsFaultActive = (data.fault & (1 << i)) != 0;
         }
 
-        Fuse.FuseStatus = data.pio_input;
-
         Ltc2992.VoltageSupply = data.bus_voltage;
         Ltc2992.CurrentSupply = data.bus_current;
         Ltc2992.VoltageMCU = data.mcu_voltage;
@@ -66,6 +64,12 @@ public partial class MainWindowViewModel : ViewModelBase
         for (int i = 0; i < 4; i++)
         {
             MotorCurrents[i].AdcValue = data.i_motor[i];
+        }
+
+        // adc_pwr[0], adc_pwr[1] are tied to AGND -> not monitored
+        for (int i = 0; i < AdcPowerRails.Count; i++)
+        {
+            AdcPowerRails[i].AdcValue = data.adc_pwr[i + 2];
         }
     }
 
@@ -101,7 +105,15 @@ public partial class MainWindowViewModel : ViewModelBase
 
     public Tmp101ViewModel Tmp101 { get; } = new Tmp101ViewModel();
 
-    public FuseViewModel Fuse { get; } = new FuseViewModel();
+    public List<Ad7928Model> AdcPowerRails { get; } = new List<Ad7928Model>
+    {
+        new Ad7928Model() { Description = "3V3D" },  // adc_pwr[2]
+        new Ad7928Model() { Description = "5V_A" },  // adc_pwr[3]
+        new Ad7928Model() { Description = "5V_1" },  // adc_pwr[4]
+        new Ad7928Model() { Description = "5V_4" },  // adc_pwr[5]
+        new Ad7928Model() { Description = "5V_3" },  // adc_pwr[6]
+        new Ad7928Model() { Description = "5V_2" },  // adc_pwr[7]
+    };
 
     public List<Ad7928Model> MotorCurrents { get; } = new List<Ad7928Model>
     {
